@@ -14,6 +14,8 @@ const dev = process.env.NODE_ENV !== "production";
 
 const config: NextConfig = {
   poweredByHeader: false,
+  // photo uploads (already shrunk in the browser) go through server actions
+  experimental: { serverActions: { bodySizeLimit: "24mb" } },
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
