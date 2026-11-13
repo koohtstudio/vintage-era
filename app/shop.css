@@ -171,3 +171,4 @@
 @media (prefers-reduced-motion:reduce){
  .stripes i{animation:none;transform:none}.sticker{animation:none}.check{animation:none}
 }
+@media (min-width:820px){.checkout-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}}
