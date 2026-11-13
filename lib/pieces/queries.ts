@@ -9,7 +9,7 @@ export const PIECES_TAG = "pieces";
 export const SETTINGS_TAG = "settings";
 const REVALIDATE = 60;
 
-const PIECE_SELECT = `
+export const PIECE_SELECT = `
   id, slug, title, description, size, era, condition, condition_notes, authenticity_notes, measurements,
   price_cents, price_is_placeholder, status, held_until, live_at, just_dropped_until, sold_at, featured_rank,
   categories(slug, name, measurement_kind), stores(slug, name), sellers(name),
@@ -30,6 +30,8 @@ type Row = {
 function toPhoto(p: Row["piece_photos"][number]): PhotoRef {
   return { url: photoUrl(p.path, p.source), width: p.width ?? 1000, height: p.height ?? 1000, blur: p.blur_data_url, kind: p.kind };
 }
+
+export const toCardData = (r: unknown) => toCard(r as Row);
 
 function toCard(r: Row): PieceCardData {
   const photos = [...r.piece_photos].sort((a, b) => a.position - b.position);

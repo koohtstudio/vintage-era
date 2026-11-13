@@ -10,6 +10,7 @@ export default [
   {
     rules: {
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      "react/no-unescaped-entities": "off",
     },
   },
 ];
