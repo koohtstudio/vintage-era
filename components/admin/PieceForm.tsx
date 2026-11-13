@@ -48,9 +48,9 @@ export function PieceForm({
   }
 
   const Chips = ({ name, value, set, options }: { name: string; value: string; set: (v: string) => void; options: readonly { v: string; label: string }[] }) => (
-    <div className="chips" role="radiogroup">
+    <div className="chips" role="group">
       <input type="hidden" name={name} value={value} />
-      {options.map((o) => <button type="button" role="radio" aria-checked={value === o.v} key={o.v} className="ad-chip" aria-pressed={value === o.v} onClick={() => set(o.v)}>{o.label}</button>)}
+      {options.map((o) => <button type="button" key={o.v} className="ad-chip" aria-pressed={value === o.v} onClick={() => set(o.v)}>{o.label}</button>)}
     </div>
   );
   const E = ({ k }: { k: string }) => (err(k) ? <span role="alert" style={{ color: "var(--color-hot)", textTransform: "none", letterSpacing: 0 }}>{err(k)}</span> : null);
