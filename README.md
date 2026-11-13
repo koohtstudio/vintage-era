@@ -18,7 +18,7 @@ pnpm dev             # http://localhost:3100
 ```
 
 Local ports are non-default (Supabase 563xx, Next 3100) so this can run next to other projects.
-Reset the demo any time with `pnpm demo:reset` (same as `db:reset`).
+Reset the demo any time with `pnpm demo:reset` (same as `db:reset`). Run it before `pnpm db:test` or `pnpm e2e`: both assume the pristine seed.
 
 **In mock mode:**
 
@@ -51,7 +51,7 @@ Reset the demo any time with `pnpm demo:reset` (same as `db:reset`).
 | `pnpm db:test` | pgTAP: RLS, the one-of-one rule, admin rules (82 tests) |
 | `pnpm rls:proof` | Black-box proof using only the public anon key: it can read the shop and nothing else |
 | `pnpm db:types` | Regenerate `lib/supabase/types.ts` |
-| `pnpm e2e` | Playwright: two-window live test and phone add-a-piece |
+| `pnpm e2e` | Playwright (needs a production build running on 3100 and a fresh seed): two-window live test, phone add-a-piece, admin smoke test |
 | `pnpm lh` | Lighthouse CI (mobile) on Home and Shop against a production build |
 
 ## How the one-of-one rule works
