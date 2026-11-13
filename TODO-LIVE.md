@@ -29,7 +29,7 @@ Everything below is a plug-in: no code changes should be needed. Tick them off i
 - [ ] **Cloudflare Turnstile.** `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` (add your domain to the widget).
 - [ ] **Secrets.** `SESSION_SECRET`, `ORDER_TOKEN_SECRET`, `CRON_SECRET` (`openssl rand -base64 36` each).
 - [ ] **Domain** on Vercel, then `NEXT_PUBLIC_SITE_URL=https://<domain>`. HSTS and `upgrade-insecure-requests` switch on automatically for https.
-- [ ] **Vercel Cron** (already in `vercel.json`, every minute) hits `/api/cron/tick` to open drops, send drop alerts and refresh the static shop. pg_cron also handles expiry and drops inside the database.
+- [ ] **Vercel Cron** (in `vercel.json`, daily so it deploys on the free Hobby plan; change the schedule to `* * * * *` on a Pro plan so drop alerts go out within a minute) hits `/api/cron/tick` to open drops, send drop alerts and refresh the static shop. pg_cron also handles expiry and drops inside the database.
 - [ ] **SMS (optional).** Texts currently only go to the mock outbox. To send real texts, implement a provider in `lib/notify/index.ts` (e.g. Twilio) and set `SMS_PROVIDER`. CASL applies to texts too (consent + STOP handling).
 
 ## Before launch
