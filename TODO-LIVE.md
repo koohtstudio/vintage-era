@@ -19,13 +19,11 @@ Everything below is a plug-in: no code changes should be needed. Tick them off i
 
 ## Accounts and keys
 
-- [ ] **Supabase project** (a Canadian region is a good fit). Then:
-  - `supabase link --project-ref <ref>` and `supabase db push` (runs the 6 migrations: schema, RLS, functions, cron, storage bucket, realtime).
-  - Do **not** run `seed.sql` against production (it creates demo logins with a known password).
-  - Enable the `pg_cron` extension if it isn't already (Database, Extensions).
+- [ ] **Supabase project.** A hosted `era-vintage` project exists (ca-central-1, free tier) with migrations 0001 to 0007 applied, RLS on all 19 tables, the `piece-photos` bucket, realtime on `pieces`/`orders`/`drops`, the three pg_cron jobs, and reference data (3 stores, 7 categories, 4 sellers incl. the `[Fourth seller]` placeholder, ticker messages) loaded. No demo data and no demo logins. Still to do:
+  - Put `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in env (Dashboard, Project Settings, API) and the **service role key** as `SUPABASE_SERVICE_ROLE_KEY` (server env only, never `NEXT_PUBLIC_`).
   - Auth: set Site URL to your domain; add `https://<domain>/auth/callback` to redirect URLs; configure SMTP (Resend works) so magic links send.
   - Create the staff users (Auth, Users), then insert their `profiles` rows: `insert into profiles (id, role, store_id, display_name) values (…)`. One `owner` (no store), staff with a `store_id`.
-  - Put the project URL, anon key and service role key in env.
+  - For future schema changes: add a numbered file in `supabase/migrations/`, test locally (`pnpm db:reset && pnpm db:test`), then apply it to the hosted project.
 - [ ] **Stripe** (Canada, CAD). `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`. Webhook URL: `https://<domain>/api/stripe/webhook` with events `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.expired`. Do a test-mode purchase and a refund before using live keys.
 - [ ] **Resend.** `RESEND_API_KEY`, `EMAIL_FROM`; verify your sending domain (SPF, DKIM, DMARC) so order and drop emails don't land in spam.
 - [ ] **Cloudflare Turnstile.** `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` (add your domain to the widget).
