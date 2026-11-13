@@ -66,7 +66,7 @@
 .card h3 a{text-decoration:none}.card h3 a::after{content:"";position:absolute;inset:0;z-index:1}
 .card .meta{font:400 13px var(--font-mono);color:var(--color-mute)}
 .card .row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px;gap:8px}
-.price{font:700 18px var(--font-mono)}.price.ph2{color:var(--color-mute-2);font-size:14px}
+.price{font:700 18px var(--font-mono)}.price.ph2{color:var(--color-mute);font-size:14px}
 .add{position:relative;z-index:4;min-height:44px;padding:0 12px;border:2px solid var(--color-ink);border-radius:999px;background:#fff;font:700 12px var(--font-sans);text-transform:uppercase;cursor:pointer;transition:all .2s}
 .add:hover{background:var(--color-lime)}.add.in{background:var(--color-ink);color:var(--color-lime)}.add[disabled]{opacity:.4;cursor:not-allowed}
 .stores{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;margin-top:40px}
