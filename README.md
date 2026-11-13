@@ -1,4 +1,4 @@
-# Era Vintage: shop and admin
+# Era Vintage: shop and admin 
 
 Online shop and admin for Era Vintage (Barrie, Newmarket, Toronto). Every piece is one of one.
 Built on the real architecture from day one: this round runs in **mock mode** on seeded data, and going live is a matter of adding keys (see [TODO-LIVE.md](TODO-LIVE.md)). No POS.
