@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (single source of truth) ---------- */
+@theme {
+  --color-lime: #7ce34f;
+  --color-lime-deep: #4cb327;
+  --color-pink: #f28bdd;
+  --color-hot: #c2187a;
+  --color-ink: #0b0b0b;
+  --color-ink-2: #1c1c1c;
+  --color-paper: #ffffff;
+  --color-fog: #f4f4f1;
+  --color-mute: #555555;
+  --color-mute-2: #8a8a8a;
+
+  --font-display: var(--font-racing), "Racing Sans One", system-ui, sans-serif;
+  --font-sans: var(--font-grotesk), "Space Grotesk", system-ui, sans-serif;
+  --font-mono: var(--font-spacemono), "Space Mono", ui-monospace, monospace;
+
+  --radius-card: 22px;
+  --radius-pill: 999px;
+  --shadow-hard: 4px 4px 0 var(--color-ink);
+  --shadow-hard-lg: 8px 8px 0 var(--color-ink);
+
+  --ease-pop: cubic-bezier(0.3, 1.4, 0.5, 1);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: inherit;
+  }
+  [id] {
+    scroll-margin-top: 90px;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-hot);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------- Layout helpers ---------- */
+.wrap {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+@media (min-width: 820px) {
+  .wrap {
+    padding: 0 40px;
+  }
+}
+.skew {
+  transform: skewX(-6deg);
+  transform-origin: left;
+}
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+.mono {
+  font-family: var(--font-mono);
+}
+.kick {
+  font: 700 13px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-hot);
+  margin: 0 0 12px;
+}
+.dark .kick {
+  color: var(--color-pink);
+}
+
+/* ---------- Checkered flag strip ---------- */
+.check {
+  height: 16px;
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, var(--color-ink) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--color-ink) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--color-ink) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--color-ink) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  animation: race 1.2s linear infinite;
+}
+@keyframes race {
+  to {
+    background-position: 16px 0, 16px 8px, 24px -8px, 8px 0;
+  }
+}
+
+/* ---------- Marquee (ticker + categories) ---------- */
+.track {
+  display: flex;
+  width: max-content;
+  animation: tick 36s linear infinite;
+}
+.track-slow {
+  animation-duration: 40s;
+}
+@keyframes tick {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Entrance + sticker motion ---------- */
+@keyframes up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.up {
+  animation: up 0.9s var(--ease-out) both;
+}
+@keyframes wob {
+  50% {
+    transform: rotate(8deg) scale(1.06);
+  }
+}
+@keyframes pop {
+  from {
+    transform: scale(0.2) rotate(-60deg);
+    opacity: 0;
+  }
+}
+@keyframes zoom {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  55% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1) translateX(30%);
+    opacity: 0;
+  }
+}
+@keyframes flash-in {
+  0% {
+    box-shadow: 0 0 0 0 var(--color-lime);
+  }
+  100% {
+    box-shadow: 0 0 0 18px transparent;
+  }
+}
+.flash-in {
+  animation: flash-in 1.2s ease-out 2;
+}
+
+/* ---------- Buttons (hard offset shadow) ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 26px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  font: 700 15px var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform 0.3s var(--ease-pop),
+    box-shadow 0.3s,
+    background 0.3s,
+    color 0.3s;
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+}
+.btn-lime {
+  background: var(--color-lime);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-hard);
+}
+.btn-lime:hover {
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+.btn-pink {
+  background: var(--color-pink);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-hard);
+}
+.btn-pink:hover {
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+.btn-ink {
+  background: var(--color-ink);
+  color: #fff;
+}
+.btn-ink:hover {
+  color: var(--color-lime);
+}
+.btn-white {
+  background: #fff;
+  color: var(--color-ink);
+}
+.btn-white:hover {
+  box-shadow: 4px 4px 0 var(--color-lime);
+}
+.btn[disabled],
+.btn[aria-disabled="true"] {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  font: 600 14px var(--font-sans);
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.chip:hover {
+  background: #f4f4f4;
+}
+.chip[aria-pressed="true"] {
+  background: var(--color-ink);
+  color: var(--color-lime);
+}
+
+/* ---------- Reduced motion: no marquee, wobble, wipes, entrance, smooth scroll ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .track {
+    animation: none !important;
+    transform: none;
+    overflow-x: auto;
+  }
+  .up {
+    opacity: 1;
+  }
+}
