@@ -1,0 +1,33 @@
+# deps
+node_modules
+.pnpm-store
+
+# next
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+
+# env
+.env
+.env.*
+!.env.example
+
+# local assets not for the repo
+_work/
+photos/from-instagram/
+.DS_Store
+
+# tests
+playwright-report
+test-results
+.lighthouseci
+coverage
+
+# supabase local
+supabase/.branches
+supabase/.temp
+supabase/functions/.env
+
+# claude
+.claude/settings.local.json
