@@ -47,13 +47,13 @@ export function PieceForm({
     );
   }
 
-  const Chips = ({ name, value, set, options }: { name: string; value: string; set: (v: string) => void; options: readonly { v: string; label: string }[] }) => (
+  const chips = ({ name, value, set, options }: { name: string; value: string; set: (v: string) => void; options: readonly { v: string; label: string }[] }) => (
     <div className="chips" role="group">
       <input type="hidden" name={name} value={value} />
       {options.map((o) => <button type="button" key={o.v} className="ad-chip" aria-pressed={value === o.v} onClick={() => set(o.v)}>{o.label}</button>)}
     </div>
   );
-  const E = ({ k }: { k: string }) => (err(k) ? <span role="alert" style={{ color: "var(--color-hot)", textTransform: "none", letterSpacing: 0 }}>{err(k)}</span> : null);
+  const errText = (k: string) => (err(k) ? <span role="alert" style={{ color: "var(--color-hot)", textTransform: "none", letterSpacing: 0 }}>{err(k)}</span> : null);
 
   return (
     <form key={key} action={act} className="panel aform" noValidate>
@@ -61,15 +61,15 @@ export function PieceForm({
         {state.message && !state.ok && <p role="alert" style={{ margin: 0, color: "var(--color-hot)", fontWeight: 700 }}>{state.message}</p>}
         {state.ok && mode === "edit" && <p role="status" style={{ margin: 0, fontWeight: 700 }}>{state.message}</p>}
         <PhotoUploader error={err("photos")} />
-        <label>Title<input type="text" name="title" defaultValue={start.title} placeholder="e.g. 90s Raptors Starter jacket" autoComplete="off" /><E k="title" /></label>
+        <label>Title<input type="text" name="title" defaultValue={start.title} placeholder="e.g. 90s Raptors Starter jacket" autoComplete="off" />{errText("title")}</label>
 
         <div className="lab">Type
           <input type="hidden" name="categoryId" value={cat} />
-          <div className="chips">{categories.map((c) => <button type="button" key={c.id} className="ad-chip" aria-pressed={cat === c.id} onClick={() => { setCat(c.id); setSize(""); }}>{c.name}</button>)}</div><E k="categoryId" />
+          <div className="chips">{categories.map((c) => <button type="button" key={c.id} className="ad-chip" aria-pressed={cat === c.id} onClick={() => { setCat(c.id); setSize(""); }}>{c.name}</button>)}</div>{errText("categoryId")}
         </div>
-        <div className="lab">Size<Chips name="size" value={size} set={setSize} options={(SIZE_CHOICES[kind] ?? ["One size"]).map((s) => ({ v: s, label: s }))} /><E k="size" /></div>
-        <div className="lab">Era<Chips name="era" value={era} set={setEra} options={ERAS.map((e) => ({ v: e, label: e }))} /></div>
-        <div className="lab">Condition<Chips name="condition" value={cond} set={setCond} options={CONDITIONS.map((c) => ({ v: c.value, label: c.label }))} /></div>
+        <div className="lab">Size{chips({ name: "size", value: size, set: setSize, options: (SIZE_CHOICES[kind] ?? ["One size"]).map((s) => ({ v: s, label: s })) })}{errText("size")}</div>
+        <div className="lab">Era{chips({ name: "era", value: era, set: setEra, options: ERAS.map((e) => ({ v: e, label: e })) })}</div>
+        <div className="lab">Condition{chips({ name: "condition", value: cond, set: setCond, options: CONDITIONS.map((c) => ({ v: c.value, label: c.label })) })}</div>
 
         <div className="lab">Measurements, laid flat
           <div className="f2">
@@ -82,7 +82,7 @@ export function PieceForm({
         </div>
 
         <div className="f2">
-          <label>Price ($)<input type="number" inputMode="decimal" step="0.01" min="0" name="price" defaultValue={start.priceDollars} disabled={tbd} placeholder="145" /><E k="price" /></label>
+          <label>Price ($)<input type="number" inputMode="decimal" step="0.01" min="0" name="price" defaultValue={start.priceDollars} disabled={tbd} placeholder="145" />{errText("price")}</label>
           <label style={{ flexDirection: "row", alignItems: "center", gap: 10, minHeight: 48, alignSelf: "end" }}><input type="checkbox" name="priceTbd" checked={tbd} onChange={(e) => setTbd(e.target.checked)} style={{ width: 22, height: 22 }} />Price TBD</label>
         </div>
         {tbd && <input type="hidden" name="price" value="" />}

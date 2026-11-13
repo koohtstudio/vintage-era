@@ -48,6 +48,11 @@ export function LiveProvider({ initialNow, children }: { initialNow: number; chi
     return () => clearInterval(t);
   }, []);
 
+  // Lets tests (and curious people in devtools) see whether the live channel is up.
+  useEffect(() => {
+    document.documentElement.dataset.live = connected ? "1" : "0";
+  }, [connected]);
+
   const register = useCallback((ids: string[]) => {
     for (const id of ids) known.current.add(id);
   }, []);

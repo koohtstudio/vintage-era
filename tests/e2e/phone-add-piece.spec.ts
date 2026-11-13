@@ -1,6 +1,8 @@
 import path from "node:path";
 import { expect, test } from "@playwright/test";
-import { card } from "./helpers";
+import { card, refreshShop } from "./helpers";
+
+test.beforeEach(refreshShop);
 
 test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
 
@@ -8,7 +10,7 @@ test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true
 test("barrie staff lists a piece on a phone in under a minute", async ({ browser, page }) => {
   const shopper = await (await browser.newContext()).newPage();
   await shopper.goto("/shop");
-  await shopper.waitForTimeout(3000);
+  await expect(shopper.locator("html")).toHaveAttribute("data-live", "1", { timeout: 15_000 });
 
   await page.goto("/admin/login");
   await page.getByRole("button", { name: /Barrie staff/ }).click();

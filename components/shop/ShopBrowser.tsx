@@ -58,8 +58,8 @@ export function ShopBrowser({
   const sizesPresent = SIZE_FILTERS.filter((s) => live.some((x) => x.piece.size === s));
   const erasPresent = ERAS.filter((e) => live.some((x) => x.piece.era === e));
 
-  const Row = ({ label, k, options }: { label: string; k: Key; options: { v: string; label: string }[] }) => (
-    <div className="frow" role="group" aria-label={label}>
+  const row = (label: string, k: Key, options: { v: string; label: string }[]) => (
+    <div className="frow" role="group" aria-label={label} key={label}>
       <b>{label}</b>
       <button className="chip" aria-pressed={!get(k)} onClick={() => setParam(k, "")}>
         All
@@ -75,10 +75,10 @@ export function ShopBrowser({
   return (
     <>
       <div className="filters">
-        <Row label="Type" k="type" options={categories.map((c) => ({ v: c.slug, label: c.name }))} />
-        <Row label="Size" k="size" options={sizesPresent.map((s) => ({ v: s, label: s }))} />
-        <Row label="Era" k="era" options={erasPresent.map((e) => ({ v: e, label: e }))} />
-        <Row label="Store" k="store" options={stores.map((s) => ({ v: s.slug, label: s.name }))} />
+        {row("Type", "type", categories.map((c) => ({ v: c.slug, label: c.name })))}
+        {row("Size", "size", sizesPresent.map((s) => ({ v: s, label: s })))}
+        {row("Era", "era", erasPresent.map((e) => ({ v: e, label: e })))}
+        {row("Store", "store", stores.map((s) => ({ v: s.slug, label: s.name })))}
         <div className="frow">
           <b>Sort</b>
           {SORTS.map((s) => (

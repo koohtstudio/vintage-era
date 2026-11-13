@@ -31,8 +31,8 @@ export function CheckoutForm({
   const tax = Math.round((subtotal + ship) * taxRate);
   const err = (k: string) => state.errors?.[k];
 
-  const Field = ({ name, label, type = "text", auto, ph }: { name: string; label: string; type?: string; auto?: string; ph?: string }) => (
-    <label className="field">
+  const field = ({ name, label, type = "text", auto, ph }: { name: string; label: string; type?: string; auto?: string; ph?: string }) => (
+    <label className="field" key={name}>
       {label}
       <input name={name} type={type} autoComplete={auto} placeholder={ph} aria-invalid={!!err(name)} />
       {err(name) && <span role="alert" style={{ color: "var(--color-hot)", textTransform: "none", letterSpacing: 0 }}>{err(name)}</span>}
@@ -66,19 +66,19 @@ export function CheckoutForm({
 
           <fieldset style={{ border: 0, padding: 0, margin: 0, display: "grid", gap: 14 }}>
             <legend className="kick">2 · About you</legend>
-            <Field name="name" label="Name" auto="name" ph="First and last" />
-            <Field name="email" label="Email" type="email" auto="email" ph="For your receipt" />
-            <Field name="phone" label="Phone" type="tel" auto="tel" ph="So we can reach you" />
+            {field({name: "name", label: "Name", auto: "name", ph: "First and last"})}
+            {field({name: "email", label: "Email", type: "email", auto: "email", ph: "For your receipt"})}
+            {field({name: "phone", label: "Phone", type: "tel", auto: "tel", ph: "So we can reach you"})}
           </fieldset>
 
           {mode === "ship" && (
             <fieldset style={{ border: 0, padding: 0, margin: 0, display: "grid", gap: 14 }}>
               <legend className="kick">Ship to</legend>
-              <Field name="line1" label="Street address" auto="address-line1" />
-              <Field name="line2" label="Apartment, suite (optional)" auto="address-line2" />
-              <Field name="city" label="City" auto="address-level2" />
-              <Field name="province" label="Province" auto="address-level1" ph="ON" />
-              <Field name="postal" label="Postal code" auto="postal-code" ph="M5V 0A0" />
+              {field({name: "line1", label: "Street address", auto: "address-line1"})}
+              {field({name: "line2", label: "Apartment, suite (optional)", auto: "address-line2"})}
+              {field({name: "city", label: "City", auto: "address-level2"})}
+              {field({name: "province", label: "Province", auto: "address-level1", ph: "ON"})}
+              {field({name: "postal", label: "Postal code", auto: "postal-code", ph: "M5V 0A0"})}
             </fieldset>
           )}
         </div>

@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { admin, card, checkout } from "./helpers";
+import { admin, card, checkout, refreshShop } from "./helpers";
+
+test.beforeEach(refreshShop);
 
 /**
  * The pitch: two shoppers, two windows.
@@ -13,7 +15,9 @@ test("in a bag -> sold -> hold expires, live in a second window", async ({ brows
   const b = await (await browser.newContext()).newPage();
   await Promise.all([a.goto("/shop"), b.goto("/shop")]);
   await expect(card(b, "Colour-block Windbreaker")).toBeVisible();
-  await b.waitForTimeout(3000); // let B's realtime channel subscribe (it starts after idle)
+  // B's realtime channel starts after idle; wait until it reports connected
+  await expect(b.locator("html")).toHaveAttribute("data-live", "1", { timeout: 15_000 });
+  await expect(a.locator("html")).toHaveAttribute("data-live", "1", { timeout: 15_000 });
 
   // A adds to bag
   await card(a, "Colour-block Windbreaker").getByRole("button", { name: /Add/ }).click();
@@ -30,6 +34,8 @@ test("in a bag -> sold -> hold expires, live in a second window", async ({ brows
   expect((data as { ok: boolean }).ok).toBe(false);
 
   // Hold expiry: B takes a piece, the hold lapses, it returns to the shop for A
+  await a.goto("/shop"); // A is on its order page after paying
+  await expect(a.locator("html")).toHaveAttribute("data-live", "1", { timeout: 15_000 });
   await card(b, "Navy Satin Starter Jacket").getByRole("button", { name: /Add/ }).click();
   await expect(card(a, "Navy Satin Starter Jacket").locator(".badge")).toHaveText("In a bag", { timeout: 10_000 });
   const db = admin();
