@@ -106,8 +106,8 @@ export function LiveProvider({ initialNow, children }: { initialNow: number; chi
       cleanup = () => void supabase.removeChannel(channel);
     };
 
-    const idle = (window as unknown as { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback;
-    const handle = idle ? idle(() => void start()) : window.setTimeout(() => void start(), 1200);
+    const idle = (window as unknown as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+    const handle = idle ? idle(() => void start(), { timeout: 2500 }) : window.setTimeout(() => void start(), 1200);
     return () => {
       cancelled = true;
       if (!idle) clearTimeout(handle);

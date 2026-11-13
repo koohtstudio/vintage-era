@@ -31,7 +31,7 @@ export function useLivePieces(pieces: PieceCardData[], soldVisibleDays: number, 
         return {
           piece,
           status: effectiveStatus(piece, now),
-          justDropped: isJustDropped(piece, now) || (!ids.has(base.id) && !o),
+          justDropped: isJustDropped(piece, now) || !ids.has(base.id),
           fresh: !!o && now - o.at < 6000,
         };
       })
