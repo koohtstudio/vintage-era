@@ -27,6 +27,14 @@ begin
   perform set_config('app.reason', coalesce(p_reason, 'staff change'), true);
   update pieces set status = p_to, live_at = case when p_to = 'live' then now() else live_at end,
     just_dropped_until = null where id = p_piece;
+  if p_to <> 'live' then
+    -- A row that stops being publicly visible produces no postgres_changes event for anon (RLS),
+    -- so tell open shop tabs explicitly. Topic 'shop' is a public broadcast channel.
+    begin
+      perform realtime.send(jsonb_build_object('id', p_piece, 'status', p_to), 'piece_hidden', 'shop', false);
+    exception when others then null;
+    end;
+  end if;
   return jsonb_build_object('ok', true, 'status', p_to);
 end $$;
 

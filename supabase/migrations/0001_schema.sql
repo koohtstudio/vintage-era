@@ -234,6 +234,7 @@ create table public.payment_events (
   type text not null,
   payload jsonb not null default '{}'::jsonb,
   received_at timestamptz not null default now(),
+  processed_at timestamptz,
   unique (provider, event_id)                               -- webhook idempotency
 );
 

@@ -197,14 +197,14 @@ isOneToOne: false
                   ]
                 },"payment_events": {
                   Row: {
-                    "event_id": string,"id": string,"payload": NonNullable<Json>,"provider": string,"received_at": string,"type": string
+                    "event_id": string,"id": string,"payload": NonNullable<Json>,"processed_at": string | null,"provider": string,"received_at": string,"type": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "event_id": string,"id"?: string,"payload"?: NonNullable<Json>,"provider": string,"received_at"?: string,"type": string
+                    "event_id": string,"id"?: string,"payload"?: NonNullable<Json>,"processed_at"?: string | null,"provider": string,"received_at"?: string,"type": string
                   }
                   Update: {
-                    "event_id"?: string,"id"?: string,"payload"?: NonNullable<Json>,"provider"?: string,"received_at"?: string,"type"?: string
+                    "event_id"?: string,"id"?: string,"payload"?: NonNullable<Json>,"processed_at"?: string | null,"provider"?: string,"received_at"?: string,"type"?: string
                   }
                   Relationships: [
                     
