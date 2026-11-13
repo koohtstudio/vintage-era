@@ -5,7 +5,7 @@
 .ticker span::after{content:"✦";color:var(--color-hot);font-size:14px}
 .nav{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:2px solid var(--color-ink)}
 .navin{display:flex;align-items:center;justify-content:space-between;height:66px;gap:20px}
-.navin img{height:40px;width:auto;transition:transform .5s var(--ease-pop)}
+.navin img{height:40px;width:auto;max-width:none;transition:transform .5s var(--ease-pop)}
 .navin a:hover img{transform:rotate(-4deg) scale(1.06)}
 .navlinks{display:none;gap:4px}
 .navlinks a{text-decoration:none;font-weight:600;font-size:15px;padding:10px 16px;border-radius:999px;transition:all .25s}

@@ -41,7 +41,7 @@ const config: NextConfig = {
         source: "/((?!admin|checkout|order|auth|api|mock).*)",
         headers: [
           ...BASE_SECURITY_HEADERS,
-          { key: "Content-Security-Policy", value: buildCsp({ dev, supabaseUrl }) },
+          { key: "Content-Security-Policy", value: buildCsp({ dev, supabaseUrl, siteUrl: process.env.NEXT_PUBLIC_SITE_URL }) },
         ],
       },
       { source: "/(admin|checkout|order|auth|api|mock)(.*)", headers: BASE_SECURITY_HEADERS },

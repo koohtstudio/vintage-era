@@ -7,7 +7,7 @@ export function SiteHeader() {
     <header className="nav">
       <div className="wrap navin">
         <Link href="/" aria-label="Era Vintage home">
-          <Image src="/brand/era-vintage-logo.png" alt="Era Vintage" width={451} height={220} priority style={{ height: "auto" }} />
+          <Image src="/brand/era-vintage-logo.png" alt="Era Vintage" width={451} height={220} priority />
         </Link>
         <nav className="navlinks" aria-label="Main">
           <Link href="/shop">Shop</Link>

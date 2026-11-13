@@ -2,7 +2,7 @@
  * Content Security Policy builder, shared by next.config.ts (static pages, no nonce)
  * and middleware.ts (dynamic pages, per-request nonce).
  */
-export function buildCsp(opts: { nonce?: string; dev?: boolean; supabaseUrl?: string }): string {
+export function buildCsp(opts: { nonce?: string; dev?: boolean; supabaseUrl?: string; siteUrl?: string }): string {
   const supa = opts.supabaseUrl ? new URL(opts.supabaseUrl) : null;
   const supaHttp = supa ? supa.origin : "";
   const supaWs = supa ? `${supa.protocol === "https:" ? "wss" : "ws"}://${supa.host}` : "";
@@ -27,7 +27,8 @@ export function buildCsp(opts: { nonce?: string; dev?: boolean; supabaseUrl?: st
     "form-action": [`'self'`, "https://checkout.stripe.com"],
     "frame-ancestors": [`'none'`],
   };
-  if (!opts.dev) directives["upgrade-insecure-requests"] = [];
+  // Only force https when the site itself is served over https (local production runs are plain http).
+  if (!opts.dev && opts.siteUrl?.startsWith("https://")) directives["upgrade-insecure-requests"] = [];
 
   return Object.entries(directives)
     .map(([k, v]) => (v.length ? `${k} ${v.join(" ")}` : k))

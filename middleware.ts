@@ -12,7 +12,7 @@ import { BASE_SECURITY_HEADERS, buildCsp } from "@/lib/security/csp";
  */
 export async function middleware(request: NextRequest) {
   const nonce = btoa(crypto.randomUUID());
-  const csp = buildCsp({ nonce, dev: process.env.NODE_ENV !== "production", supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL });
+  const csp = buildCsp({ nonce, dev: process.env.NODE_ENV !== "production", supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL, siteUrl: process.env.NEXT_PUBLIC_SITE_URL });
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-nonce", nonce);
